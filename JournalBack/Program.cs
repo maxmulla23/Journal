@@ -8,9 +8,24 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+var Mycors = "MyCors";
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 // Add services to the container.
+
+
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy(name: Mycors,
+    policy => 
+    {
+        policy.WithOrigins("http://example.com", 
+        "http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    }
+    );
+});
 
 builder.Services.AddDbContext<JournalDbContext>(options =>
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
@@ -50,7 +65,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+app.UseRouting();
+
+app.UseCors(Mycors);
 app.UseAuthorization();
 
 app.MapControllers();

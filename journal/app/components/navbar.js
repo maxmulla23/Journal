@@ -3,12 +3,17 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { UserCircleIcon } from '@heroicons/react/24/solid'
-
+import { signOut } from 'next-auth/react'
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
 export default function NavBar(){
+
+  const handleLogout = () => {
+    signOut()
+    router.push("/")
+  }
     return (
         <Disclosure as="nav" className="bg-slate-100">
             {({ open }) => (
@@ -84,7 +89,7 @@ export default function NavBar(){
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/login"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

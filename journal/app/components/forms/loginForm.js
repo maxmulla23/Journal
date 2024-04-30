@@ -1,5 +1,5 @@
 'use client'
-import { useSession } from "next-auth/react"
+import {signIn, useSession } from "next-auth/react"
 import React, { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import { useRouter } from "next/navigation"
@@ -20,17 +20,17 @@ export default function LoginForm(){
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5103/api/User/login", { email, password })
-      console.log(response)
-      toast.success("User Logged in successfully")
-      
-    } catch (error) {
-      console.log(error)
-      toast.error("something went wrong! Please check credentials")
-    }
-     
-    }
+    let data = { email, password };
+    signIn("credentials", { ...data, redirect: false }).then((callback) => {
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+
+      if (callback?.ok && !callback?.error) {
+        toast.success("Logged in successfully!");
+      }
+    });
+  };
   
     return(
       <div className="w-full max-w-xs">
@@ -44,7 +44,7 @@ export default function LoginForm(){
                 id="email"
                 value={email}
                 type="email" 
-                placeholder="Enter Email"
+                // placeholder="Enter Email"
                 onChange={(e) => setEmail(e.target.value)} 
                 />
           </div>
@@ -57,7 +57,7 @@ export default function LoginForm(){
         id="password"
         value={password} 
         type="password"
-        placeholder="Enter Password" 
+        // placeholder="Enter Password" 
         onChange={(e) => setPassword(e.target.value)}
         />
       

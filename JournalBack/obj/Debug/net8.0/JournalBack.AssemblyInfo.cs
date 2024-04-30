@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JournalBack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc624eff4b62de994e4cea74b9e289daab7fb6cf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d2522336c3f5535fcc94ab5ca4a873af0cc1530")]
 [assembly: System.Reflection.AssemblyProductAttribute("JournalBack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JournalBack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

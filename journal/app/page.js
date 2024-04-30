@@ -67,9 +67,11 @@ export default function Home() {
             </div>
             <div className="flex justify-center items-center relative w-full mx-auto mt-6 md:mt-0">
                 <Image 
+
                         src="/homepage.svg" 
                         width={400}
                         height={400}
+                        alt="journal pic"
                 />
             </div>
         </div>

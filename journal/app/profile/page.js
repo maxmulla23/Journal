@@ -4,7 +4,8 @@ import { UserCircleIcon } from "@heroicons/react/24/solid"
 import JournalForm from "../components/forms/JournalForm"
 import { useSession } from "next-auth/react"
 import { Dialog, Transition } from "@headlessui/react"
-// const session?.data? = {
+import Journals from "../components/Journals"
+// const User = {
 //     fullname: 'Iweene Wanjiru',
 //     username: 'Iweene',
 //     email: 'Iweene@gmail.com',
@@ -13,7 +14,7 @@ import { Dialog, Transition } from "@headlessui/react"
 export default function Page() {
     const [data, setData] = useState()
     const session = useSession();
-    let [isOpen, setIsOpen] = useState(true)
+    let [isOpen, setIsOpen] = useState(false)
     function closeModal() {
         setIsOpen(false)
     }
@@ -25,7 +26,7 @@ export default function Page() {
         <div className="flex flex-row mt-10 md:flex-row">
             <h1 className="text-pink-900 font-bold text-2xl md:text-lg ml-9">Welcome back {session?.data?.user?.fullName}</h1>
             <div className="flex flex-col md:flex-col text-pink-900 mt-7">
-                <div className="ml-10 ">
+                <div className="ml-10 pl-7">
                 <UserCircleIcon className="h-44 w-auto md:h-22" />
                 <h1 className=" ml-10 mt-3  text-3xl md:text-lg text-pink-900">{session?.data?.user?.username}</h1>
                 </div>
@@ -91,7 +92,11 @@ export default function Page() {
         </Dialog>
       </Transition>
             <hr className="mt-8 border-solid border-black" />
-           
+            <div className="mt-10 p-4">
+            <Journals />
+            </div>
+            
+
             </div>
             
         </div>

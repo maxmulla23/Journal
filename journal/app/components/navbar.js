@@ -4,12 +4,14 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
 export default function NavBar(){
 
+  const router = useRouter()
   const handleLogout = () => {
     signOut()
     router.push("/")

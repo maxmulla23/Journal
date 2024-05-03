@@ -1,8 +1,11 @@
 'use client'
 import React, { useState, Fragment } from "react"
-import { UserCircleIcon } from "@heroicons/react/24/solid"
-import JournalForm from "../components/forms/JournalForm"
+import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
+import axios from "axios"
 import { useSession } from "next-auth/react"
+import { toast } from "react-toastify"
+import { UserCircleIcon } from "@heroicons/react/24/solid"
 import { Dialog, Transition } from "@headlessui/react"
 import Journals from "../components/Journals"
 // const User = {
@@ -15,6 +18,40 @@ export default function Page() {
     const [data, setData] = useState()
     const session = useSession();
     let [isOpen, setIsOpen] = useState(false)
+    const [formData, setFormData] = useState({
+      title: "",
+      content: "",
+      userId: session?.data?.user?.userId,
+      user: session?.data?.user?.user
+      
+  })
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          let newFormdata = {
+              ...formData,
+          }
+          const response = await axios.post("http://localhost:5103/api/Journal", newFormdata)
+          console.log(response)
+          toast.success("Journal added successfully!")
+      } catch (error) {
+          console.log(error);
+          toast.error("an error occurred!")
+      }
+  }
+  const handleChange = (e) => {
+      const name = e.target.name;
+      const value = e.target.value
+
+      const currentInputFieldData = {
+          [name] : value
+      }
+      const updatedData = {
+          ...formData,
+          ...currentInputFieldData,
+      }
+      setFormData(updatedData)
+  }
     function closeModal() {
         setIsOpen(false)
     }
@@ -33,7 +70,8 @@ export default function Page() {
             </div>
             <div className="flex flex-col md:flex-col ml-8 mt-12">
             <h1 className="text-4xl md:text-2xl text-pink-950">{session?.data?.user?.email}</h1>
-            <h2 className="text-pink-800 mt-2 text-lg">{session?.data?.user?.fullname}</h2>
+            <h2 className="text-pink-800 mt-2 text-lg">{session?.data?.user?.fullName}</h2>
+            
             <button 
             type="button"
             onClick={openModal}
@@ -73,7 +111,24 @@ export default function Page() {
                     Soul Script
                   </Dialog.Title>
                   <div className="mt-2">
-                    <JournalForm />
+                  <div>
+            <h1>Journal Form</h1>
+            <Input 
+            onChange={handleChange}
+            name="title"
+            type="text"
+            className="mt-4" placeholder="type title here" />
+            <Textarea 
+            onChange={handleChange}
+            name="content"
+            type="text"
+            className="mt-4" placeholder="type content here" />
+            <button 
+             type="button"
+             className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-pink-100 px-4 py-2 text-sm font-medium text-pink-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+             onClick={handleSubmit}
+            >Create</button>
+        </div>
                   </div>
 
                   <div className="mt-4">

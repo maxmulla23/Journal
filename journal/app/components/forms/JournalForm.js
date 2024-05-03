@@ -19,7 +19,8 @@ export default function JournalForm(){
             let newFormdata = {
                 ...formData,
             }
-            const response = await axios.post("http://localhost:5103/api/Journal", newFormdata)
+            const response = await axios.post("http://localhost:5103/api/Journal/newJournal", newFormdata)
+            console.log(response)
             toast.success("Journal added successfully!")
         } catch (error) {
             console.log(error);

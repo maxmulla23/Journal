@@ -15,11 +15,11 @@ namespace JournalBack.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.Journals)
-                .WithOne(e => e.User)
-                .HasForeignKey(e => e.UserId)
-                .IsRequired();
+            modelBuilder.Entity<Journal>()
+            .HasOne(j => j.User)
+            .WithMany(u => u.Journals)
+            .HasForeignKey(j => j.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
                 
         }
     }

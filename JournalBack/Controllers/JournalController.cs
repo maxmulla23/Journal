@@ -1,44 +1,62 @@
 using System;
 using JournalBack.Data;
 using JournalBack.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
 
 namespace JournalBack.Controllers
-{
+{  
     [Route("api/[controller]")]
     [ApiController]
-
+    // [Authorize]
     public class JournalController : ControllerBase
     {
         private readonly JournalDbContext _dbContext;
+        private readonly UserManager<User> _userManager;
 
-        public JournalController(JournalDbContext dbContext)
+        public JournalController(JournalDbContext dbContext, UserManager<User> userManager)
         {
             _dbContext = dbContext;
+            _userManager= userManager;
+           
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostJournal(Journal journal)
+        public async Task<IActionResult> PostJournal([FromBody] Journal model)
         {
+
+            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            
          try
          {
-               _dbContext.Journals.Add(journal);
+            Journal journal = new Journal()
+            {
+                Title = model.Title,
+                Content = model.Content,
+                UserId = user.Id
+            };
+           
+            // journal.User = _user;
+            var result = await _dbContext.Journals.AddAsync(journal);
             await _dbContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(PostJournal), new { id = journal.Id}, journal);
+            return CreatedAtAction(nameof(GetJournal), new { id = journal.Id}, journal);
          }
-         catch (System.Exception)
-         {
+         catch (Exception ex)
+         { 
+
+            Console.WriteLine(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError);
             
-            throw;
          }
         }
 
         [HttpGet]
-        [Route("user/{userId}/journals")]
+        [Route("user/{userId}")]
         public async Task<IActionResult> GetJournal(string userId)
         {
             try

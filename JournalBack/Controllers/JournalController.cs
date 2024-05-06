@@ -1,4 +1,6 @@
 using System;
+using System.Security.Claims;
+using JoournalBack.Models;
 using JournalBack.Data;
 using JournalBack.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -26,19 +28,16 @@ namespace JournalBack.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostJournal([FromBody] Journal model)
+        public async Task<IActionResult> PostJournal([FromBody] JournalDTO journalDTO)
         {
 
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value;
+            var user = await _userManager.FindByNameAsync(userName);
+            var UserId = user.Id;
             
          try
          {
-            Journal journal = new Journal()
-            {
-                Title = model.Title,
-                Content = model.Content,
-                UserId = user.Id
-            };
+            Journal journal = new Journal();
            
             // journal.User = _user;
             var result = await _dbContext.Journals.AddAsync(journal);

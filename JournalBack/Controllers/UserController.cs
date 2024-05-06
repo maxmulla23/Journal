@@ -76,7 +76,7 @@ namespace JoournalBack.Controllers
                     fullName = user.FullName,
                     username = user.UserName,
                     userId = user.Id,
-                    role = userRoles
+                    
                 });
             }
             return Unauthorized();

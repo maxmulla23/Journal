@@ -31,7 +31,7 @@ builder.Services.AddDbContext<JournalDbContext>(options =>
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = false;
 }).AddEntityFrameworkStores<JournalDbContext>()

@@ -167,3 +167,14 @@
 /home/maxmulla/Documents/Projects/Journal App/JournalBack/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /home/maxmulla/Documents/Projects/Journal App/JournalBack/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /home/maxmulla/Documents/Projects/Journal App/JournalBack/obj/Debug/net8.0/JournalBack.sourcelink.json
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.csproj.AssemblyReference.cache
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.GeneratedMSBuildEditorConfig.editorconfig
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.AssemblyInfoInputs.cache
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.AssemblyInfo.cs
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.csproj.CoreCompileInputs.cache
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.MvcApplicationPartsAssemblyInfo.cs
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.MvcApplicationPartsAssemblyInfo.cache
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.sourcelink.json
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.dll
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/refint/JournalBack.dll
+/home/maxwell/Desktop/projects/Journal/JournalBack/obj/Debug/net8.0/JournalBack.pdb

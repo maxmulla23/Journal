@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/maxmulla/Documents/Projects/Journal App/JournalBack/JournalBack.csproj": {}
+    "/home/maxwell/Desktop/projects/Journal/JournalBack/JournalBack.csproj": {}
   },
   "projects": {
-    "/home/maxmulla/Documents/Projects/Journal App/JournalBack/JournalBack.csproj": {
+    "/home/maxwell/Desktop/projects/Journal/JournalBack/JournalBack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/maxmulla/Documents/Projects/Journal App/JournalBack/JournalBack.csproj",
+        "projectUniqueName": "/home/maxwell/Desktop/projects/Journal/JournalBack/JournalBack.csproj",
         "projectName": "JournalBack",
-        "projectPath": "/home/maxmulla/Documents/Projects/Journal App/JournalBack/JournalBack.csproj",
-        "packagesPath": "/home/maxmulla/.nuget/packages/",
-        "outputPath": "/home/maxmulla/Documents/Projects/Journal App/JournalBack/obj/",
+        "projectPath": "/home/maxwell/Desktop/projects/Journal/JournalBack/JournalBack.csproj",
+        "packagesPath": "/home/maxwell/.nuget/packages/",
+        "outputPath": "/home/maxwell/Desktop/projects/Journal/JournalBack/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/maxmulla/.nuget/NuGet/NuGet.Config"
+          "/home/maxwell/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -91,6 +91,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.6, 8.0.6]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.6, 8.0.6]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.6, 8.0.6]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -99,7 +113,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

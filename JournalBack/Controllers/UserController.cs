@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore;
+using JournalBack.Dtos.Account;
+using JournalBack.Interfaces;
 
 
 namespace JoournalBack.Controllers
@@ -23,92 +25,93 @@ namespace JoournalBack.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-    //     public readonly JournalDbContext _context;
-    //     private readonly UserManager<User> _userManager;
-    //     private readonly RoleManager<IdentityRole> _roleManager;
-    //     private readonly SignInManager<User> _signInManager;
+           public readonly JournalDbContext _context;
+         private readonly UserManager<AppUser> _userManager;
+         private readonly ITokenService _tokenService;
+         private readonly SignInManager<AppUser> _signInManager;
     //     private readonly IConfiguration _configuration;
 
-    //     public UserController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager,SignInManager<User> signInManager, JournalDbContext context ,IConfiguration configuration)
-    //     {
-    //         _context = context;
-    //         _userManager = userManager;
-    //         _roleManager = roleManager;
-    //          _signInManager = signInManager;
-    //         _configuration = configuration;
-    //     }
+        public UserController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, JournalDbContext context, ITokenService tokenService)
+        {
+            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _tokenService = tokenService;
+            
+        }
 
-    //     [HttpPost]
-    //     [Route("login")]
-    //     public async Task<IActionResult> Login([FromBody] LoginModel model)
-    //     {
-    //         var user = await _userManager.FindByEmailAsync(model.Email);
-    //         if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
-    //         {
-    //             var userRoles = await _userManager.GetRolesAsync(user);
+   
 
-    //             var authClaims = new List<Claim>
-    //             {
-    //                 new Claim(ClaimTypes.Name, user.UserName),
-    //                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-    //             };
+   [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-    //             foreach (var userRole in userRoles)
-    //             {
-    //                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-    //             }
+                var appUser = new AppUser
+                {
+                    UserName = registerDto.UserName,
+                    Email = registerDto.Email
+                };
+                var createUser = await _userManager.CreateAsync(appUser, registerDto.Password);
 
-    //             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+                if(createUser.Succeeded)
+                {
+                    var roleresult = await _userManager.AddToRoleAsync(appUser, "User");
+                    if(roleresult.Succeeded)
+                    {
+                        return Ok(
+                            new NewUserDto
+                            {
+                                FullName = appUser.FullName,
+                                UserName = appUser.UserName,
+                                Email = appUser.Email,
+                                Token = _tokenService.CreateToken(appUser)
+                            }
+                        );
+                    }
+                    else 
+                    {
+                        return StatusCode(500, roleresult.Errors);
+                    }
+                }
+                else
+                {
+                    return StatusCode(500, createUser.Errors);
+                }
+            }
+            catch (Exception e)
+            {
+                
+                return StatusCode(500, e);
+            }
+        }
 
-    //             var token = new JwtSecurityToken(
-    //                 issuer: _configuration["JWT:ValidIssuer"],
-    //                 audience: _configuration["JWT:ValidAudience"],
-    //                 expires: DateTime.Now.AddHours(3),
-    //                 claims: authClaims,
-    //                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-    //                 );
+        [HttpPost("login")]
 
-    //             return Ok(new
-    //             {
-    //                 token = new JwtSecurityTokenHandler().WriteToken(token),
-    //                 expiration = token.ValidTo,
-    //                 email = user.Email,
-    //                 fullName = user.FullName,
-    //                 username = user.UserName,
-    //                 userId = user.Id,
-                    
-    //             });
-    //         }
-    //         return Unauthorized();
-    //     }
+        public async Task<IActionResult> Login (LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-    //     [HttpPost]
-    //     [Route("register")]
-    //     public async Task<IActionResult> Register([FromBody] RegisterModel model)
-    //     {
-    //         var userExists = await _userManager.FindByIdAsync(model.Email);
-    //         if (userExists != null)
-    //             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
 
-    //         User user = new User()
-    //         {
-    //             Email = model.Email,
-    //             FullName = model.FullName,
-    //             SecurityStamp = Guid.NewGuid().ToString(),
-    //             UserName = model.Username
-    //         };
-    //         var result = await _userManager.CreateAsync(user, model.Password);
-    //         if (!result.Succeeded)
-    //             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            if(user == null) return Unauthorized("Invalid Username!");
 
-    //         return Ok(new Response { Status = "Success", Message = "User created successfully!" });
-    //     }
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-    //     [HttpGet]
-    //     public async Task<IActionResult> GetUser()
-    //     {
-    //         var users = await _context.Users.ToListAsync();
-    //         return Ok(users);
-    //     }
+            if(!result.Succeeded) return Unauthorized("Username not found and/or password is incorrect!");
+
+            return Ok(
+                new NewUserDto
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Token = _tokenService.CreateToken(user)
+                }
+            );
+        }
     }
 }

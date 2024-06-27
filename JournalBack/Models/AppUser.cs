@@ -4,9 +4,9 @@ using JournalBack.Data;
 
 namespace JournalBack.Models;
 
-public class User : IdentityUser 
+public class AppUser : IdentityUser 
 {
     
     public string? FullName { get; set; }
-    public ICollection<Journal> Journals { get; } = new List<Journal>();
+    // public ICollection<Journal> Journals { get; } = new List<Journal>();
 }

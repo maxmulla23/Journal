@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Newtonsoft.Json;
 using Microsoft.OpenApi.Models;
+using JournalBack.Interfaces;
+using JournalBack.Service;
 
 var Mycors = "MyCors";
 var builder = WebApplication.CreateBuilder(args);
@@ -100,6 +102,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 

@@ -21,7 +21,7 @@ using JournalBack.Interfaces;
 
 namespace JoournalBack.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/account")]
     [ApiController]
     public class UserController : ControllerBase
     {

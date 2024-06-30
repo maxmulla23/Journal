@@ -104,6 +104,24 @@ namespace JournalBack.Controllers
 
 
     }
+
+    [HttpDelete]
+    [Route("{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        if(!ModelState.IsValid)
+            return BadRequest();
+
+
+        var journal = await _journalRepo.DeleteAsync(id);
+
+        if  (journal == null)
+        {
+            return NotFound();
+        }
+        return Ok(journal);
+    }
+
     }
 
     

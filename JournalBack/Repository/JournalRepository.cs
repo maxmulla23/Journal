@@ -44,9 +44,21 @@ namespace JournalBack.Repository
             return await _context.Journals.Include(a => a.AppUser).FirstOrDefaultAsync(j => j.Id == id);
         }
 
-        public Task<Journal?> UpdateAsync(int id, Journal journal)
+        public async Task<Journal?> UpdateAsync(int id, Journal journal)
         {
-            throw new NotImplementedException();
+            var existingJournal = await _context.Journals.FindAsync(id);
+
+            if(existingJournal == null)
+            {
+                return null;
+            }
+
+            existingJournal.Title = journal.Title;
+            existingJournal.Content = journal.Content;
+
+            await _context.SaveChangesAsync();
+
+            return existingJournal;
         }
     }
 }

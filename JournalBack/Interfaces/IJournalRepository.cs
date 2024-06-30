@@ -12,6 +12,6 @@ namespace JournalBack.Interfaces
         Task<Journal?> GetByIdAsync(int id);
         Task<Journal> CreateAsync(Journal journal);
         Task<Journal?> UpdateAsync(int id, Journal journal);
-        Task<Journal?> DeleteAsync(AppUser appUser);
+        Task<Journal?> DeleteAsync(int id);
     }
 }

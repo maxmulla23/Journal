@@ -27,9 +27,19 @@ namespace JournalBack.Repository
 
         
 
-        public Task<Journal?> DeleteAsync(AppUser appUser)
+        public async Task<Journal?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var journal = await _context.Journals.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(journal == null)
+            {
+                return null;
+
+            }
+            _context.Journals.Remove(journal);
+            await _context.SaveChangesAsync();
+
+            return journal;
         }
 
        

@@ -28,5 +28,13 @@ namespace JournalBack.Mappers
                 Content = journalDto.Content
             };
         }
+
+        public static Journal ToJournalFromUpdate(this UpdateJournalDto journalDto)
+        {
+            return new Journal{
+                Title = journalDto.Title,
+                Content = journalDto.Content,
+            };
+        }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 
@@ -83,5 +84,27 @@ namespace JournalBack.Controllers
         
        
       }
+
+    [HttpPut]
+    [Route("{id:int}")]
+    public async Task<IActionResult> EditJournal([FromRoute] int id, [FromBody] UpdateJournalDto updateJournal)
+    {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+
+        var journal = await _journalRepo.UpdateAsync(id, updateJournal.ToJournalFromUpdate());
+
+        if(journal == null)
+        {
+            return NotFound("Journal does not exist");
+        }
+
+        return Ok(journal.ToJournalDto());
+
+
     }
+    }
+
+    
 }

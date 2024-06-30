@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading.Tasks;
 using JournalBack.Data;
@@ -34,20 +34,15 @@ namespace JournalBack.Repository
 
        
 
-        public async Task<List<Journal>> GetAllAsync(AppUser user)
+        public async Task<List<Journal>> GetAllAsync()
         {
-            return await _context.Journals.Where(u => u.AppUserId == user.Id)
-            .Select(journal => new Journal
-            {
-                Id = journal.Id,
-                Date = journal.Date,
-                Title = journal.Title,
-                Content = journal.Content,
-                
-            }).ToListAsync();
+            return await _context.Journals.Include(a => a.AppUser).ToListAsync();
         }
 
-        
+        public async Task<Journal?> GetByIdAsync(int id)
+        {
+            return await _context.Journals.Include(a => a.AppUser).FirstOrDefaultAsync(j => j.Id == id);
+        }
 
         public Task<Journal?> UpdateAsync(int id, Journal journal)
         {

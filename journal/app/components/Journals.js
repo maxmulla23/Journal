@@ -10,20 +10,22 @@ export default function Journals() {
     const [data, setData] = React.useState()
     const session = useSession()
 
-    // React.useEffect(() => {
-    //     async function getJournals () {
-    //         try {
-    //             console.log(session)
-    //             const response = await axios.get(`http://localhost:5103/api/Journal/User/{userId}/journals`)
-    //             console.log(response);
-    //             setData(response.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     getJournals()
-    // }, [session.status])
+    React.useEffect(() => {
+        async function getJournals () {
+            try {
+                console.log(session)
+                const response = await axios.get(`http://localhost:5103/api/Journal/`)
+                console.log(response);
+                setData(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getJournals()
+    }, [session.status])
     return(
+      <div>
+        {
         <Alert>
         {/* <Terminal className="h-4 w-4" /> */}
         <AlertTitle>Heads up!</AlertTitle>
@@ -38,5 +40,7 @@ export default function Journals() {
         </AlertDescription>
         
       </Alert>
+    }
+      </div>
     )
 }

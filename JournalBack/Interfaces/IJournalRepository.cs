@@ -8,7 +8,7 @@ namespace JournalBack.Interfaces
 {
     public interface IJournalRepository
     {
-        Task<List<Journal>> GetAllAsync();
+        Task<List<Journal>> GetUserJournal(AppUser user);
         Task<Journal?> GetByIdAsync(int id);
         Task<Journal> CreateAsync(Journal journal);
         Task<Journal?> UpdateAsync(int id, Journal journal);

@@ -1,3 +1,4 @@
+import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -11,24 +12,25 @@ export default NextAuth({
           // e.g. domain, username, password, 2FA token, etc.
           // You can pass any HTML attribute to the <input> tag through the object.
           credentials: {
-            email: { label: "Email", type: "text", placeholder: "email address" },
-            // username: { label: "Username", type: "text", placeholder: "jsmith" },
+            // email: { label: "Email", type: "text", placeholder: "email address" },
+            username: { label: "Username", type: "text", placeholder: "jsmith" },
             password: { label: "Password", type: "password" }
           },
           async authorize(credentials, req) {
             // Add logic here to look up the user from the credentials supplied
             // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
       
-            const res = await fetch("http://localhost:5103/api/User/login", {
+            const res = await fetch("http://localhost:5103/api/account/login", {
                 method: "POST",
                 headers: {
                     "content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email: credentials?.email,
+                    username: credentials?.username,
                     password: credentials?.password,
                 }),
             });
+            
             const user = await res.json();
 
             if (user) {

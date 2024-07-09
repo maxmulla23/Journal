@@ -22,7 +22,7 @@ export default function Page() {
       title: "",
       content: "",
       userId: session?.data?.user?.userId,
-      user: session?.data?.user?.user
+      
       
   })
   const handleSubmit = async (e) => {
@@ -61,11 +61,11 @@ export default function Page() {
 
     return(
         <div className="flex flex-row mt-10 md:flex-row">
-            <h1 className="text-pink-900 font-bold text-2xl md:text-lg ml-9">Welcome back {session?.data?.user?.fullName}</h1>
+            <h1 className="text-pink-900 font-bold text-2xl md:text-lg ml-9">Welcome back Stranger!</h1>
             <div className="flex flex-col md:flex-col text-pink-900 mt-7">
                 <div className="ml-10 pl-7">
                 <UserCircleIcon className="h-44 w-auto md:h-22" />
-                <h1 className=" ml-10 mt-3  text-3xl md:text-lg text-pink-900">{session?.data?.user?.username}</h1>
+                <h1 className=" ml-10 mt-3  text-3xl md:text-lg text-pink-900">{session?.data?.user?.userName}</h1>
                 </div>
             </div>
             <div className="flex flex-col md:flex-col ml-8 mt-12">

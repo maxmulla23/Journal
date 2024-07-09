@@ -36,7 +36,7 @@ namespace JournalBack.Controllers
         {
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
-            var userJournal = await _journalRepo.GetAllAsync();
+            var userJournal = await _journalRepo.GetUserJournal(appUser);
 
             if(userJournal == null)
             {

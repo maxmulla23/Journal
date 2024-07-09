@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 export default function LoginForm(){
   const router = useRouter();
   const session = useSession();
-  const [email, setEmail] = useState()
+  const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function LoginForm(){
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    let data = { email, password };
+    let data = { username, password };
     signIn("credentials", { ...data, redirect: false }).then((callback) => {
       if (callback?.error) {
         toast.error(callback.error);
@@ -37,14 +37,14 @@ export default function LoginForm(){
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email
+              Username
             </label>
               <input 
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                id="email"
-                value={email}
+                id="username"
+                value={username}
                 type="text"
-                onChange={(e) => setEmail(e.target.value)} 
+                onChange={(e) => setUsername(e.target.value)} 
                 />
           </div>
     <div className="mb-6">

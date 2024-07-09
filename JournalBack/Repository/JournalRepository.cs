@@ -44,9 +44,9 @@ namespace JournalBack.Repository
 
        
 
-        public async Task<List<Journal>> GetAllAsync()
+        public async Task<List<Journal>> GetUserJournal(AppUser user)
         {
-            return await _context.Journals.Include(a => a.AppUser).ToListAsync();
+            return await _context.Journals.Where(u => u.AppUserId == user.Id).ToListAsync();
         }
 
         public async Task<Journal?> GetByIdAsync(int id)

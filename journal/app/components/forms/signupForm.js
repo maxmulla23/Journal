@@ -20,7 +20,7 @@ const onSubmit = async (e) => {
     try {
         let newFormdata = {
             ...formData}
-        const response = await axios.post("http://localhost:5103/api/User/register", newFormdata);
+        const response = await axios.post("http://localhost:5103/api/account/register", newFormdata);
         
         console.log(response)
         

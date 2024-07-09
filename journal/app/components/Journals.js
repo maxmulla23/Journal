@@ -25,13 +25,12 @@ export default function Journals() {
     }, [session.status])
     return(
       <div>
-        {
+        {data?.map((data) => (
         <Alert>
         {/* <Terminal className="h-4 w-4" /> */}
-        <AlertTitle>Heads up!</AlertTitle>
+        <AlertTitle>{data.title}</AlertTitle>
         <AlertDescription>
-          Maxwell Mulla is designing a very beautiful App.
-          
+          {data.content}
           <div className="flex flex-row gap-3">
           <DeleteIcon className="mt-6 text-red-500"/>
           <EditIcon className="mt-6 text-red-500"/>
@@ -40,7 +39,7 @@ export default function Journals() {
         </AlertDescription>
         
       </Alert>
-    }
+    ))}
       </div>
     )
 }

@@ -13,7 +13,7 @@ using JournalBack.Interfaces;
 using JournalBack.Service;
 using JournalBack.Repository;
 
-var Mycors = "MyCors";
+
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 // Add services to the container.
@@ -49,18 +49,7 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
-builder.Services.AddCors(options => 
-{
-    options.AddPolicy(name: Mycors,
-    policy => 
-    {
-        policy.WithOrigins( 
-        "http://localhost:3000")
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-    }
-    );
-});
+
 
 builder.Services.AddDbContext<JournalDbContext>(options =>
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
@@ -124,7 +113,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors(Mycors);
+
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .SetIsOriginAllowed(origin => true)
+);
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 

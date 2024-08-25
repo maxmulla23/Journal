@@ -31,7 +31,7 @@ namespace JournalBack.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
     
         public async Task<IActionResult> GetAllUserJournal()
         {
@@ -47,7 +47,7 @@ namespace JournalBack.Controllers
             return Ok(userJournal);
         }
         [HttpGet("{id:int}")]
-        [Authorize]
+        
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if(!ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace JournalBack.Controllers
         }
       
       [HttpPost]
-      [Authorize]
+      
       public async Task<IActionResult> CreateJournal(CreateJournalDto journalDto)
       {
 
@@ -89,7 +89,7 @@ namespace JournalBack.Controllers
 
     [HttpPut]
     [Route("{id:int}")]
-    [Authorize]
+    
     public async Task<IActionResult> EditJournal([FromRoute] int id, [FromBody] UpdateJournalDto updateJournal)
     {
         if(!ModelState.IsValid)
@@ -110,7 +110,7 @@ namespace JournalBack.Controllers
 
     [HttpDelete]
     [Route("{id:int}")]
-    [Authorize]
+    
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         if(!ModelState.IsValid)

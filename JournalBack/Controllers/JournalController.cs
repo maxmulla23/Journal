@@ -64,8 +64,8 @@ namespace JournalBack.Controllers
         }
       
       [HttpPost]
-      
-      public async Task<IActionResult> CreateJournal(CreateJournalDto journalDto)
+      [Authorize]
+      public async Task<IActionResult> CreateJournal([FromRoute] CreateJournalDto journalDto)
       {
 
         if(!ModelState.IsValid)

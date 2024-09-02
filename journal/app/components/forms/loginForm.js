@@ -22,6 +22,7 @@ export default function LoginForm(){
     e.preventDefault();
     let data = { username, password };
     signIn("credentials", { ...data, redirect: false }).then((callback) => {
+      console.log(data)
       if (callback?.error) {
         toast.error(callback.error);
       }

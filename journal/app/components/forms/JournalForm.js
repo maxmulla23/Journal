@@ -11,7 +11,7 @@ export default function JournalForm(){
     const [formData, setFormData] = useState({
         title: "",
         content: "",
-        userId: session?.data?.user?.id
+        userId: session?.data?.id
     })
     const handleSubmit = async (e) => {
         e.preventDefault();

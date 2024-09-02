@@ -15,7 +15,7 @@ using JournalBack.Repository;
 
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+// var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen(option =>
 
 
 builder.Services.AddDbContext<JournalDbContext>(options =>
-        options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {

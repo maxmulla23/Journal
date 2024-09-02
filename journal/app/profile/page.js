@@ -8,6 +8,8 @@ import { toast } from "react-toastify"
 import { UserCircleIcon } from "@heroicons/react/24/solid"
 import { Dialog, Transition } from "@headlessui/react"
 import Journals from "../components/Journals"
+
+
 // const User = {
 //     fullname: 'Iweene Wanjiru',
 //     username: 'Iweene',
@@ -18,26 +20,31 @@ export default function Page() {
     const [data, setData] = useState()
     const session = useSession();
     let [isOpen, setIsOpen] = useState(false)
+    
     const [formData, setFormData] = useState({
       title: "",
       content: "",
-      userId: session?.data?.user?.userId,
+      // userId: session?.data?.user?.userId,
       
       
   })
   const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-          let newFormdata = {
-              ...formData,
+        let newFormdata = {
+            ...formData,
+        }
+        const response = await axios.post("http://localhost:5103/api/Journal", newFormdata, {
+          headers:{
+            Authorization: `Bearer ${token}`
           }
-          const response = await axios.post("http://localhost:5103/api/Journal", newFormdata)
-          console.log(response)
-          toast.success("Journal added successfully!")
-      } catch (error) {
-          console.log(error);
-          toast.error("an error occurred!")
-      }
+        })
+        console.log(response)
+        toast.success("Journal added successfully!")
+    } catch (error) {
+        console.log(error);
+        toast.error("an error occurred!")
+    }
   }
   const handleChange = (e) => {
       const name = e.target.name;
@@ -113,7 +120,8 @@ export default function Page() {
                   <div className="mt-2">
                   <div>
             <h1>Journal Form</h1>
-            <Input 
+            
+            <Input
             onChange={handleChange}
             name="title"
             type="text"
@@ -125,9 +133,10 @@ export default function Page() {
             className="mt-4" placeholder="type content here" />
             <button 
              type="button"
-             className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-pink-100 px-4 py-2 text-sm font-medium text-pink-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
              onClick={handleSubmit}
+             className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-pink-100 px-4 py-2 text-sm font-medium text-pink-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
             >Create</button>
+            
         </div>
                   </div>
 

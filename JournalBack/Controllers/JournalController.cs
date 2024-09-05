@@ -65,7 +65,7 @@ namespace JournalBack.Controllers
       
       [HttpPost]
       [Authorize]
-      public async Task<IActionResult> CreateJournal([FromRoute] CreateJournalDto journalDto)
+      public async Task<IActionResult> CreateJournal( CreateJournalDto createjournalDto)
       {
 
         if(!ModelState.IsValid)
@@ -76,10 +76,8 @@ namespace JournalBack.Controllers
         var appUser = await _userManager.FindByNameAsync(username);
 
 
-        var journalModel = journalDto.ToJournalFromCreate();
+        var journalModel = createjournalDto.ToJournalFromCreate();
         journalModel.AppUserId = appUser.Id;
-        
-        
         await _journalRepo.CreateAsync(journalModel);
 
         return CreatedAtAction(nameof(GetById), new { id = journalModel.Id}, journalModel.ToJournalDto());

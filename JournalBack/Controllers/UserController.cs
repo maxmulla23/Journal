@@ -53,6 +53,7 @@ namespace JoournalBack.Controllers
                 var appUser = new AppUser
                 {
                     UserName = registerDto.UserName,
+                    FullName = registerDto.FullName,
                     Email = registerDto.Email
                 };
                 var createUser = await _userManager.CreateAsync(appUser, registerDto.Password);
